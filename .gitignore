@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+*.log
+tmp/
+
+netapp-manageability-sdk-*.zip
+netapp-harvest_*_all.deb
+netapp-harvest_*.zip
