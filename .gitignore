@@ -2,6 +2,7 @@
 .idea
 *.log
 tmp/
+ref/
 
 netapp-manageability-sdk-*.zip
 netapp-harvest_*_all.deb
