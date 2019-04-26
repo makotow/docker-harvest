@@ -2,28 +2,27 @@ version: '3'
 
 services:
   harvest:
-    image: harvest/harvest-docker
+    image: makotow/harvest-docker:1.1-harvest1.4.2
     volumes:
       - ${PWD}/harvest/netapp-harvest.conf:/opt/netapp-harvest/netapp-harvest.conf
-  grafana:
-    image: monitoringartist/grafana-xxl:latest
-    ports:
-      - "3000:3000"
+    restart: always
   graphite:
     image: hopsoft/graphite-statsd
     ports:
       - "80:80"
+      - "81:81"
       - "2003-2004:2003-2004"
       - "2023-2024:2023-2024"
       - "8125:8125/udp"
       - "8126:8126"
     environment:
-      - GF_SERVER_ROOT_URL: http://10.128.220.XX
-      - GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_SERVER_ROOT_URL: "xxxxxxxxxxxxx"
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
     volumes:
       - ${PWD}/graphite/configs:/opt/graphite/conf
       - ${PWD}/graphite/data:/opt/graphite/storage
       - ${PWD}/statsd:/opt/statsd
+    restart: always
 # volumes:
 #   netapp-harvest-vol:
 #   graphite-vol:
