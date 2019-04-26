@@ -16,13 +16,13 @@ LABEL version=${VERSION} \
       nmsdk-version=${NMSDK_VERSION}
 
 RUN apt-get update && apt-get install -y \
-	unzip \
-	perl \
-	libjson-perl \
-	libwww-perl \
-	libxml-parser-perl \
-	liblwp-protocol-https-perl \
-	libexcel-writer-xlsx-perl \
+	unzip=6.0-20ubuntu1 \
+	perl=5.22.1-9ubuntu0.6 \
+	libjson-perl=2.90-1 \
+	libwww-perl=6.15-1 \
+	libxml-parser-perl=2.44-1build1 \
+	liblwp-protocol-https-perl=6.06-2 \
+	libexcel-writer-xlsx-perl=0.86-1 \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
