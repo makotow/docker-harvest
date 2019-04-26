@@ -1,6 +1,6 @@
 # bumpup version here.
 
-VERSION            := 1.0
+VERSION            := 1.1
 BASE_IMAGE         := ubuntu:16.04
 HARVEST_VERSION    := 1.4.2
 NMSDK_VERSION	   := 9.5
@@ -43,3 +43,19 @@ up:
 .PHONY: compose-up
 compose-up:
 	docker-compose up -d
+
+.PHONY: compose-down
+compose-down:
+	docker-compose down
+
+.PHONY: compose-restart
+compose-restart:
+	docker-compose restart
+
+.PHONY: logs
+logs:
+	docker-compose -f logs
+
+.PHONY: import-dashboard
+import-dashboard: 
+	/opt/netapp-harvest/netapp-manager -import
