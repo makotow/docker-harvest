@@ -3,7 +3,7 @@
 *.log
 tmp/
 ref/
-
+docker-vol/*
 netapp-manageability-sdk-*.zip
 netapp-harvest_*_all.deb
 netapp-harvest_*.zip
