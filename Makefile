@@ -31,17 +31,17 @@ push-image:
 	docker push \
 	$(REGISTRY):$(TAG) 
 
-## for harvest operation
-.PHONY: up
-up:
-	docker run \
-	-d \
-	-v $PWD/netapp-harvest.conf:/opt/netapp-harvest/netapp-harvest.conf \
-	$(REGISTRY):$(TAG) \
-	netapp-harvest
+## for deploy operation
+.PHONY: init
+init:
+	./init.sh
+
+.PHONY: pull
+pull: 
+	docker-compose pull
 
 .PHONY: compose-up
-compose-up:
+compose-up: 
 	docker-compose up -d
 
 .PHONY: compose-down
@@ -52,10 +52,7 @@ compose-down:
 compose-restart:
 	docker-compose restart
 
-.PHONY: logs
-logs:
-	docker-compose -f logs
+.PHONY: tail
+tail:
+	docker-compose logs -f
 
-.PHONY: import-dashboard
-import-dashboard: 
-	/opt/netapp-harvest/netapp-manager -import
