@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  harvest:
+    image: makotow/harvest-docker:1.1-harvest1.4.2
+    volumes:
+      - ${PWD}/docker-vol/harvest/netapp-harvest.conf:/opt/netapp-harvest/netapp-harvest.conf
+    restart: always
+  graphite:
+    image: graphiteapp/graphite-statsd:1.1.5-10
+    ports:
+      - "80:80"
+      - "2003-2004:2003-2004"
+      - "2023-2024:2023-2024"
+      - "8125:8125/udp"
+      - "8126:8126"
+    volumes:
+      - graphite_data:/opt/graphite/storage
+      - graphite_config:/opt/graphite/conf
+      - statsd_config:/opt/statsd/config
+    restart: always
+  grafana:
+    image: grafana/grafana:6.1.6
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_vol:/var/lib/grafana
+    environment:
+      - "GF_SERVER_ROOT_URL:http://10.128.220.45"
+    restart: always
+volumes:
+  grafana_vol:   
+  graphite_config:
+  graphite_data:
+  statsd_config:
