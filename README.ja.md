@@ -7,33 +7,38 @@
 ## これはなに
 
 1. NetApp HarvestをDocker化したもの
-2. Dockerized Harvestをすぐに使えるようにGraphit/Grafanaも同時にセットアップするもの
+2. Dockerized Harvestをすぐに使えるようにGraphite/Grafanaも同時にセットアップするもの
 
 ## 前提条件
 
 * Docker 18.06 がインストールされていること(稼働確認実施バージョン)
 * makeがインストールされていること
 * Grafna, Graphiteも同時に起動するComposeファイルを使用するため、
-``docker-compose``も必要
+``docker-compose``がインストールされていること
 
 ## 現在の機能
 
 ユーティリティスクリプトを使った次の機能を提供。
 
-* HarvestのDocker image のビルド・セットアップ
+* HarvestのDocker image のビルド・プッシュ
 * Harvest/Grafana/Graphiteのオールインワン起動
 
 ---
 
 ## イメージのビルド/プッシュ
 
-使用するHarvest、NetAppMangedability sdkはサービス規約への同意が必要となるため各自ダウンロードをして所定のディレクトリへ配置します。
+使用するHarvest、NetAppMangeability sdk (NMSDK) はサービス規約への同意が必要となるため各自ダウンロードをして所定のディレクトリへ配置します。
+
+配置先のディレクトリは以下の場所です。
+
+* harvest/netapp-harvest_1.4.2_all.deb
+* harvest/netapp-manageability-sdk-9.5.zip
 
 もし、ベースOSのバージョンやHarvest,NMSDKのバージョンを変更する場合はMakefileの先頭の記述箇所を適宜変更してください。
 
-ここに記載のバージョンを使用してイメージのタグ付をしています。
+Makefileの先頭に記載しているバージョンを使用してイメージのタグ付をしています。
 
-ユーザ名(USER)についてはリポジトリ名に使用します。ビルド後にイメージ名を変更してもよいですが、この部分を書き換えておくとレジストリにプッシュする想定のイメージ名でdocker-compseファイル等を記載することができます。
+ユーザ名(USER)についてはリポジトリ名に使用します。ビルド後にイメージ名を変更してもよいですが、この部分を書き換えておくとレジストリにプッシュする想定のイメージ名でdocker-composeファイル等を記載することができます。
 
 ``` Makefileの変更箇所
 1 # bumpup version here.
@@ -45,7 +50,7 @@
 7 USER               := makotow
 ```
 
-コンテナイメージのビルドはMakeファイルを準備していますので、以下のコマンドを実行し、ビルド完了で終了です。
+コンテナイメージのビルドはMakeファイルを準備していますので、以下のコマンドを実行するとイメージｎビルドが開始します。
 
 ``` Dockerイメージのビルド
 sudo make bi
@@ -105,7 +110,6 @@ make init
 2 # You will need to do this post install of grafana
 3 # grafana_api_key   = CHANGE_GRAFANA_API_KEY
 4 grafana_url       = http://192.168.100.100:3000
-5
 ```
 
 ### Graphite の設定
@@ -125,7 +129,7 @@ make init
 
 ### 監視対象の追加
 
-３点目は監視対象のクラスタの追加です。(設定ファイルには)
+３点目は監視対象のクラスタの追加です。設定ファイルにはクラスタごとにIPを登録します。
 
 ここでは監視対象のONTAPクラスタを設定してください。
 
@@ -199,9 +203,9 @@ Graphiteのバージョンは`1.1.X`を選択してください。
 ### Dashboardの登録
 
 API経由で登録する場合はGrafanaからAPI Key を発行し、harvest-netapp.confに記載し、
-harvestコンテナないからImport処理を実施する。
+harvestコンテナ内からImport処理を実施します。
 
-ここではネットアップサポートサイトのツールチェストからダウンロードしたHarvest内にあるダッシュボードを手動でインポートします。
+ここではネットアップサポートサイトのツールチェストからダウンロードしたHarvest内に同梱されているダッシュボード(jsonファイル)を手動でインポートします。インポートはGrafanaのダッシュボードインポート機能を使用してください。
 
 しばらくするとデータが貯まりはじまりグラフが見えてきます。
 
