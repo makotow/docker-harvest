@@ -1,4 +1,4 @@
-# Harvest Docker
+# Dockerized Harvest
 
 ![HarvestDashbaord](images/GrafanaDashboard.png)
 
@@ -27,7 +27,7 @@
 
 ## イメージのビルド/プッシュ
 
-使用するHarvest、NetAppMangeability sdk (NMSDK) はサービス規約への同意が必要となるため各自ダウンロードをして所定のディレクトリへ配置します。
+使用するHarvest、NetAppMangeability SDK (NMSDK) はサービス規約への同意が必要となるため各自ダウンロードをして所定のディレクトリへ配置します。
 
 配置先のディレクトリは以下の場所です。
 
@@ -50,7 +50,7 @@ Makefileの先頭に記載しているバージョンを使用してイメージ
 7 USER               := makotow
 ```
 
-コンテナイメージのビルドはMakeファイルを準備していますので、以下のコマンドを実行するとイメージｎビルドが開始します。
+コンテナイメージのビルドはMakeファイルを準備していますので、以下のコマンドを実行するとイメージのビルドが開始します。
 
 ``` Dockerイメージのビルド
 sudo make bi
@@ -96,7 +96,7 @@ make init
 
 初期化時にHarvestの構成ファイルが以下のパスにコピーされます。
 
-* ${PWD}/docker-vol/harvest/harvest-netapp.conf
+* ${PWD}/docker-vol/harvest/netapp-harvest.conf
 
 上記のファイルを編集します。ここではサンプルとして３点編集します。
 
@@ -153,6 +153,8 @@ make init
 なお、Harvestのコンフィグレーションは変更することも多いため、Volume Mountを採用しています。
 
 Grafana,Graphite,Harvestを同時に起動するものもMakeファイルに準備しています。
+
+なお、コンテナイメージ名を変えている場合は該当のdocker-compose.ymlの`image: makotow/harvest-docker:1.1-harvest1.4.2`部分を書き換えてください。
 
 起動するには以下のコマンドを実行します。
 

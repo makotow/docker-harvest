@@ -1,4 +1,4 @@
-# Harvest Docker
+# Dockerized Harvest
 
 ![HarvestDashbaord](images/GrafanaDashboard.png)
 
@@ -27,7 +27,7 @@ Provides the following functions using utility script.
 
 ## Build / Push Image
 
-The Harvest and NetAppMangeability sdk (NMSDK) used will need to be downloaded and placed in the designated directory, as agree to the terms of service is required.
+The Harvest and NetAppMangeability SDK (NMSDK) used will need to be downloaded and placed in the designated directory, as agree to the terms of service is required.
 
 The deployment destination directory is the following location.
 
@@ -97,7 +97,7 @@ make init
 
 Harvest's configuration file is copied to the following path during initialization.
 
-* $ {PWD}/docker-vol/harvest/harvest-netapp.conf
+* $ {PWD}/docker-vol/harvest/netapp-harvest.conf
 
 Edit the above file. We will edit 3 points as a sample.
 
@@ -153,7 +153,9 @@ By default, `1. Using Docker Volume` is symbolic link to docker-compose.yml. Ple
 
 In addition, since the configuration of Harvest(harvest-netapp.conf) is often changed, Volume Mount is adopted.
 
-The one that starts Grafana, Graphite and Harvest simultaneously is also prepared in the Makefile.
+The utility script is provided to launch some service; Grafana, Graphite and Harvest.
+
+Please change `image: makotow/harvest-docker:1.1-harvest1.4.2` section in docker-compose.yml if you change container name when building container image.
 
 Execute the following command to start it.
 
